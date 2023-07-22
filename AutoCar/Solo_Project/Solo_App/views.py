@@ -26,7 +26,6 @@ def login(request):
             messages.error(request, value)
         return redirect('/regLog')
     else:
-       
         this_user = User.objects.get(email=request.POST['email2'])
         request.session['user_id'] = this_user.id
         request.session['username']=this_user.username
@@ -41,7 +40,7 @@ def admin(request):
         'cars': Car.objects.all(),
     }
     return render(request, 'admin.html', context)
- 
+
 def user(request): 
     context = {
         'username' : request.session['username'],
