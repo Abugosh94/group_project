@@ -52,14 +52,14 @@ class Car(models.Model):
 
 class Cart(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE, primary_key=True)
-    cars = models.ManyToManyField(Car,related_name="cars")
+    cars = models.ManyToManyField(Car,related_name="cart_cars")
     total = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 class Order(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE, primary_key=True)
-    cars = models.ManyToManyField(Car,related_name="cars")
+    cars = models.ManyToManyField(Car,related_name="order_cars")
     total = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
