@@ -23,7 +23,6 @@ def add_to_bookmarked(request):
 
 
 def sort_properties(request):
-    print(request.GET.get('sort_id'))
     if int(request.GET.get('sort_id'))== 0:
         sorted_properties = Car.objects.all()
     elif int(request.GET.get('sort_id'))== 1:
@@ -41,7 +40,6 @@ def sort_properties(request):
     sorted_properties_data = []
     for property in sorted_properties:
         # Prepare the property data in a dictionary format
-        print(property.id)
         for bookmark in bookmarked:
             if property.id == bookmark.id:
                 property_data = {
