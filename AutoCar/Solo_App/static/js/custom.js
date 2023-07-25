@@ -2,30 +2,32 @@ $(document).click(function () {
     let filled = "fas"
     let empty = "far"
     $(".remFav").click(function () {
+        var carId = $(this).find("h3").text();
         $.ajax({
             url: '/add_to_bookmarked',
             type: 'GET',
             async: false,
             data: {
                 text: "Remove From Favorites",
-                id: $("#id").text()
+                id: carId
             },
             success: function (response) {
-                $("#link"+$("#id").text()).removeClass("remFav").removeClass("fas").addClass("addFav "+empty)
+                $("#link"+carId).removeClass("remFav").removeClass("fas").addClass("addFav "+empty)
             }
         });
     });
     $(".addFav").click(function () {
+        var carId = $(this).find("h3").text();
         $.ajax({
             url: '/add_to_bookmarked',
             type: 'GET',
             async: false,
             data: {
                 text: "Add to Favorites",
-                id: $("#id").text()
+                id: carId
             },
             success: function (response) {
-                $("#link"+$("#id").text()).removeClass("addFav").removeClass("far").addClass("remFav "+filled)
+                $("#link"+carId).removeClass("addFav").removeClass("far").addClass("remFav "+filled)
             }
         });
     });
@@ -55,7 +57,6 @@ $(document).ready(function () {
         carsContainer.empty();
     
         // Loop through the sorted cars and update the HTML
-        console.log(data.page)
         data.forEach(function (car) {
             var carDiv = $("<div>").addClass("grid-item");
             var grid = $("<div>").addClass("grid");
@@ -72,7 +73,7 @@ $(document).ready(function () {
             var carFuelType = $("<span>").text(car.fuelType);
             var carPrice = $("<span>").text(car.price + "/day");
             var addToCartLink = $("<a>").attr("href", "/book").addClass("btn btn-outline-dark").css("color", "black").text("Add to Cart");
-            var bookmarkLink = $("<a>").attr("href", "add_bookmark/" + car.id).html('<i class="fas fa-bookmark"></i>');
+            var bookmarkLink = $("<a id='link"+ car.id+"'>").attr("href", "#").addClass("remFav fas fa-bookmark").html('<h3 id="id" hidden>' + car.id + '</h3>');
     
             cardBody.append(carName, carModel, carColor, $("<br>"), carFuelType, carPrice, $("<br>"), $("<br>"), addToCartLink, bookmarkLink);
     

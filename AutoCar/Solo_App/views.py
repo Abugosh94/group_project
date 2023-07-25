@@ -8,16 +8,18 @@ def add_to_bookmarked(request):
     text = request.GET.get('text')
     if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         if text == "Add to Favorites":
-            user = User.objects.get(id= request.session['user_id'])
-            car = Car.objects.get(id= int(request.GET.get('id')))
+            user = User.objects.get(id=request.session['user_id'])
+            car_id = int(request.GET.get('id'))
+            car = Car.objects.get(id=car_id)
             user.bookmarked.add(car)
-            return JsonResponse({'text': text}, status = 200)
+            return JsonResponse({'text': text}, status=200)
         if text == "Remove From Favorites":
-            user = User.objects.get(id= request.session['user_id'])
-            car = Car.objects.get(id= int(request.GET.get('id')))
+            user = User.objects.get(id=request.session['user_id'])
+            car_id = int(request.GET.get('id'))
+            car = Car.objects.get(id=car_id)
             user.bookmarked.remove(car)
-            return JsonResponse({'text': text}, status = 200)
-    return render(request, 'property-single.html')
+            return JsonResponse({'text': text}, status=200)
+    return render(request, '/')
 
 
 def sort_properties(request):

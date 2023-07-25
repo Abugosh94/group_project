@@ -122,3 +122,7 @@
   .property-grid .grid-option .custom-select option {
     border-color: #313131;
   }
+
+  a{
+    cursor: pointer;
+  }
