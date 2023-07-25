@@ -66,3 +66,7 @@ font-weight: 800;
 box-shadow: 2px 3px; 
 
 }
+
+.messages{
+    color: red;
+}

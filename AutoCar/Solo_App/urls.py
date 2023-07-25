@@ -19,5 +19,7 @@ urlpatterns = [
     path('addToCart', views.add_to_cart),
     path('cart', views.cart),	  
     path('checkout', views.checkout), 
-    path('bookmark', views.bookmark),
+    path('bookmarked', views.bookmarked),
+    path('add_bookmark/<int:car_id>', views.add_to_bookmarked),
+    path('remove_bookmark/<int:car_id>', views.remove_from_bookmarked),
 ]

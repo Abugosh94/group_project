@@ -99,6 +99,32 @@ def delete(request, car_id):
 def book(request): 
     return render(request, 'book.html')
 
+def add_to_bookmarked(request, car_id):
+    this_car = Car.objects.get(id=car_id)
+    this_car.bookmarked.add(
+        User.objects.get(id=request.session['user_id']))
+    return redirect('/user')
+
+
+def remove_from_bookmarked(request, car_id):
+    this_car = Car.objects.get(id=car_id)
+    this_car.bookmarked.remove(
+        User.objects.get(id=request.session['user_id']))
+    return redirect('/user')
+
+
+def bookmarked(request):
+    user_id = request.session.get('user_id')
+    user = User.objects.get(id=user_id)
+    bookmarked = user.bookmarked.all()
+    if user_id:
+        context = {
+            "user": user,
+            "bookmarked": bookmarked,
+        }
+        return render(request, "bookmark.html", context)
+    return redirect('/')
+
 
 def logout(request): 
     request.session.flush()
