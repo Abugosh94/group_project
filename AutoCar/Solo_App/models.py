@@ -85,7 +85,7 @@ class Car(models.Model):
     price = models.IntegerField()
     rent_days = models.IntegerField(default=0)
     available = models.BooleanField(default=True)
-    bookmarked = models.ManyToManyField(User,related_name="bookmakred")
+    bookmarked = models.ManyToManyField(User,related_name="bookmarked")
     user = models.ForeignKey(User, related_name="users", on_delete = models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True) 

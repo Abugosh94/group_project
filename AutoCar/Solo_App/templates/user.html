@@ -4,9 +4,10 @@
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
       {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/user.css' %}">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <link href="{% static 'lib/ionicons/css/ionicons.min.css' %}" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/user.css' %}">
       <title>Admin</title>
       <style>
        body {
@@ -43,6 +44,18 @@
 
       <div class="body">
         <div class="grid-container">
+          <div class="grid-option">
+            <form>
+              <select class="custom-select" id="sort">
+                <option value="0" selected>All</option>
+                <option class="option" value="1">New to Old</option>
+                <option class="option" value="2">For Rent</option>
+                <option class="option" value="3">For Sale</option>
+                <option class="option" value="4">Price (Low to High)</option>
+                <option class="option" value="5">Price (High to Low)</option>
+              </select>
+          </div>
+        <section id="cars">
         {% for car in cars%}
         <div id="back" class="grid-item">
   
@@ -54,25 +67,64 @@
             <span  >{{car.color}}</span>
              <br>
             <span >{{car.fuelType}}</span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-            <span >{{car.price}}</span>
+            <span >{{car.price}}/day</span>
             <br>
             <br>
-            <a  style="color: black;" id="book"  href="/book" class="btn btn-outline-dark">Book</a>
-
+            <a  style="color: black;" id="book"  href="/book" class="btn btn-outline-dark">Add to Cart</a>
+            {% if car in bookmarked %}
+            <a id="link{{car.id}}" class="remFav fas fa-bookmark" href="#"><h3 id="id" hidden>{{car.id}}</h3></a>
+            {% else %}
+            <a id="link{{car.id}}" class="addFav far fa-bookmark" href="#"><h3 id="id" hidden>{{car.id}}</h3></a>
+            {% endif %}
           </div>
   
         </div>
       </div>
   
         {% endfor%}
+      </section>
+        <div class="row">
+          <div class="col-sm-12">
+            <nav class="pagination-a">
+              <ul class="pagination justify-content-end">
+                {% if cars.has_previous %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{cars.previous_page_number}}" tabindex="-1">
+                    <span class="ion-ios-arrow-back"></span>
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="?page={{cars.previous_page_number}}">{{cars.previous_page_number}}</a>
+                </li>
+                {% endif %}
+                <li class="page-item active">
+                  <a class="page-link" href="#">{{cars.number}}</a>
+                </li>
+                {% if cars.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{cars.next_page_number}}">{{cars.next_page_number}}</a>
+                </li>
+                <li class="page-item next">
+                  <a class="page-link" href="?page={{cars.next_page_number}}">
+                    <span class="ion-ios-arrow-forward"></span>
+                  </a>
+                </li>
+                {% endif %}
+              </ul>
+            </nav>
+          </div>
+        </div>
       </div>
   
       </div>
-
+    </div>
      
     
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://kit.fontawesome.com/07539786e2.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <script src="{% static 'js/custom.js' %}"></script>
 </body>
 </html>

@@ -4,6 +4,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index),
+    path('add_to_bookmarked',views.add_to_bookmarked),
     path('regLog', views.regLog),
     path('book', views.book),
     path('register', views.register),
@@ -20,6 +21,6 @@ urlpatterns = [
     path('cart', views.cart),	  
     path('checkout', views.checkout), 
     path('bookmarked', views.bookmarked),
-    path('add_bookmark/<int:car_id>', views.add_to_bookmarked),
     path('remove_bookmark/<int:car_id>', views.remove_from_bookmarked),
+    path('sort_cars', views.sort_properties),
 ]

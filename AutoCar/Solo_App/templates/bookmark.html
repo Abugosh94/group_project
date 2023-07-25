@@ -40,7 +40,41 @@
             </ul>
         </div>
     </nav>
-
+    <div class="body">
+        <div class="grid-container">
+        {% for car in bookmarked%}
+        <div id="back" class="grid-item">
+  
+        <div class="grid"  >
+          <img class="card-img-top" src="../static/img/Logo1.png" alt="Card image cap">
+          <div class="card-body">
+            <h5 >{{car.name}}</h5>
+            <span >{{car.model}}</span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            <span  >{{car.color}}</span>
+             <br>
+            <span >{{car.fuelType}}</span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            <span >{{car.price}}/day</span>
+            <br>
+            <br>
+            <a  style="color: black;" id="book"  href="/book" class="btn btn-outline-dark">Add to Cart</a>
+            <a href="add_bookmark/{{car.id}}"><i class="fas fa-bookmark"></i></a>
+            {% for bookmarked in user.bookmarked.all %}
+            {{user.bookmarked}}
+              {% if car == boomarked %}
+              <i class="fas fa-bookmark"></i>
+              {% else %}
+              <i class="far fa-bookmark"></i>
+              {% endif %}
+            {% endfor %}
+          </div>
+  
+        </div>
+      </div>
+  
+        {% endfor%}
+      </div>
+  
+      </div>
     <h3 class="text-white">My Bookmarked Cars</h3>
     <div class="container">
         <div class="grid">
