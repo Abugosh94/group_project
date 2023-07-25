@@ -23,12 +23,6 @@ class UserManager(models.Manager):
         errors = {}  
         if not (User.objects.filter(email=postData['email2']) and User.objects.filter(password=postData['password2'])):
             errors['login'] = "Login failed! Check email and password"
-
-        return errors 
-    def loginValidator(self, postData):
-        errors = {}  
-        if not (User.objects.filter(email=postData['email2']) and User.objects.filter(password=postData['password2'])):
-            errors['login'] = "Login failed! Check email and password"
         return errors 
     
     def addValidator(self, postData):
@@ -83,24 +77,7 @@ class Car(models.Model):
     color = models.CharField(max_length=255)
     fuelType = models.CharField(max_length=255)
     price = models.IntegerField()
-    rent_days = models.IntegerField(default=0)
-    available = models.BooleanField(default=True)
-    bookmarked = models.ManyToManyField(User,related_name="bookmakred")
     user = models.ForeignKey(User, related_name="users", on_delete = models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True) 
     objects = UserManager()
-
-class Cart(models.Model):
-    user = models.OneToOneField(User, on_delete = models.CASCADE, primary_key=True)
-    cars = models.ManyToManyField(Car,related_name="cart_cars")
-    total = models.IntegerField(default=0)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-class Order(models.Model):
-    user = models.OneToOneField(User, on_delete = models.CASCADE, primary_key=True)
-    cars = models.ManyToManyField(Car,related_name="order_cars")
-    total = models.IntegerField(default=0)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)

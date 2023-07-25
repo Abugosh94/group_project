@@ -16,5 +16,8 @@ urlpatterns = [
     path('edit/<int:car_id>', views.edit), 
     path('editCar/<int:car_id>', views.editCar),
     path('delete/<int:car_id>', views.delete),
- 
+    path('addToCart', views.add_to_cart),
+    path('cart', views.cart),	  
+    path('checkout', views.checkout), 
+    path('bookmark', views.bookmark),
 ]

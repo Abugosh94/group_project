@@ -43,7 +43,18 @@
       </ul>
     </div>
   </nav>
-      
+  {% if messages %}
+  <ul class="messages">    
+      {% for message in messages %}   
+          <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+      {% endfor %}
+  </ul>
+  {% endif %}
+  {% if request.session.incorrect %}
+  <ul class="messages">      
+          <li>{{ request.session.incorrect }}</li>    
+  </ul>
+  {% endif %}
 
     <form action="/addCar" method="post"> {% csrf_token%}
       <div class="addForm">

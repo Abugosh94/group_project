@@ -52,16 +52,22 @@ def add(request):
     return render(request, 'add.html')
 
 def addCar(request):
+    errors = Car.objects.addValidator(request.POST)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+        return redirect('/add')
+    else:
     
-    Car.objects.create(
-                    name = request.POST['name'], 
-                    model = request.POST['model'], 
-                    color = request.POST['color'],
-                    fuelType = request.POST['fuelType'],
-                    price = request.POST['price'],
-                    user = User.objects.get(id=request.session['user_id']), 
-                )
-    return redirect('/admin')
+        Car.objects.create(
+                        name = request.POST['name'], 
+                        model = request.POST['model'], 
+                        color = request.POST['color'],
+                        fuelType = request.POST['fuelType'],
+                        price = request.POST['price'],
+                        user = User.objects.get(id=request.session['user_id']), 
+                    )
+        return redirect('/admin')
 
 def edit(request, car_id):
     context = {
@@ -70,8 +76,12 @@ def edit(request, car_id):
     return render(request,'edit.html',context)
 
 def editCar(request, car_id):
-   
-
+    errors = Car.objects.editValidator(request.POST)
+    if len(errors) > 0:
+        for key, value in errors.items():
+            messages.error(request, value)
+        return redirect(f'/edit/{car_id}')
+    else:
         selected = Car.objects.get(id=car_id)
         selected.name = request.POST['name']
         selected.model = request.POST['model']
