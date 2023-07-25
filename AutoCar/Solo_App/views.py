@@ -27,26 +27,43 @@ def sort_properties(request):
     if int(request.GET.get('sort_id'))== 0:
         sorted_properties = Car.objects.all()
     elif int(request.GET.get('sort_id'))== 1:
-        sorted_properties = Car.objects.order_by('-created_at')
+        sorted_properties = Car.objects.order_by('-model')
     elif int(request.GET.get('sort_id'))== 2:
-        sorted_properties = Car.objects.order_by('created_at')
+        sorted_properties = Car.objects.order_by('model')
     elif int(request.GET.get('sort_id'))== 4:
         sorted_properties = Car.objects.order_by('price')
     elif int(request.GET.get('sort_id'))== 5:
         sorted_properties = Car.objects.order_by('-price')
     else:
         sorted_properties = Car.objects.order_by('color')
+    user = User.objects.get(id=request.session['user_id'])
+    bookmarked = user.bookmarked.all()
     sorted_properties_data = []
     for property in sorted_properties:
         # Prepare the property data in a dictionary format
-        print(property.name)
-        property_data = {
-            'id': property.id,
-            'name': property.name,
-            'price': format(property.price, "3,d"),
-            'color': property.color,
-            'fuelType': property.fuelType,
-        }
+        print(property.id)
+        for bookmark in bookmarked:
+            if property.id == bookmark.id:
+                property_data = {
+                    'id': property.id,
+                    'name': property.name,
+                    'model': property.model,
+                    'price': format(property.price, "3,d"),
+                    'color': property.color,
+                    'fuelType': property.fuelType,
+                    'bookmarked': True,
+                }
+                break
+            else:
+                property_data = {
+                    'id': property.id,
+                    'name': property.name,
+                    'model': property.model,
+                    'price': format(property.price, "3,d"),
+                    'color': property.color,
+                    'fuelType': property.fuelType,
+                    'bookmarked': False,
+                }
         sorted_properties_data.append(property_data)
     return JsonResponse(sorted_properties_data, safe=False)
 
